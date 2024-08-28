@@ -1,0 +1,32 @@
+# app/config.py
+
+import os
+
+class Config:
+    RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'localhost')
+
+    BACKEND_TO_MSPUMPCONTROL_REQUEST_QUEUE = os.getenv('BACKEND_TO_MSPUMPCONTROL_REQUEST_QUEUE', 'backend.to.mspumpcontrol.request')
+    MSPUMPCONTROL_TO_BACKEND_RESPONSE_QUEUE = os.getenv('MSPUMPCONTROL_TO_BACKEND_RESPONSE_QUEUE', 'mspumpcontrol.to.backend.response')
+
+    MSPUMPCONTROL_TO_MSMICROCONTROLLERMANAGER_REQUEST_QUEUE = os.getenv('MSPUMPCONTROL_TO_MSMICROCONTROLLERMANAGER_REQUEST_QUEUE', 'mspumpcontrol.to.msmicrocontrollermanager.request')
+    MSMICROCONTROLLERMANAGER_TO_MSPUMPCONTROL_RESPONSE_QUEUE = os.getenv('MSMICROCONTROLLERMANAGER_TO_MSPUMPCONTROL_RESPONSE_QUEUE', 'msmicrocontrollermanager.to.mspumpcontrol.response')
+
+    QUEUES = [
+        BACKEND_TO_MSPUMPCONTROL_REQUEST_QUEUE,
+        MSPUMPCONTROL_TO_BACKEND_RESPONSE_QUEUE,
+        MSPUMPCONTROL_TO_MSMICROCONTROLLERMANAGER_REQUEST_QUEUE,
+        MSMICROCONTROLLERMANAGER_TO_MSPUMPCONTROL_RESPONSE_QUEUE
+    ]
+    
+    MICROCONTROLLER_MANAGER_URL = os.getenv('MICROCONTROLLER_MANAGER_URL', 'http://localhost:4000')
+
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+    RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'localhost')
+    MICROCONTROLLER_MANAGER_URL = os.getenv('MICROCONTROLLER_MANAGER_URL', 'http://localhost:4000')
+
+
+class DockerConfig(Config):
+    RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'rabbitmq')
+    MICROCONTROLLER_MANAGER_URL = os.getenv('MICROCONTROLLER_MANAGER_URL', 'http://microcontroller_manager:4000')
